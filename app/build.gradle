@@ -83,6 +83,12 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
+    //RecycleView
+    def selection_version = "1.1.0"
+    def rv_version = "1.2.1"
+    implementation "androidx.recyclerview:recyclerview:$rv_version"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:$selection_version"
 
 
 
