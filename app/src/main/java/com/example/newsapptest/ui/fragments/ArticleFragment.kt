@@ -11,6 +11,7 @@ import com.example.newsapptest.R
 import com.example.newsapptest.databinding.FragmentArticleBinding
 import com.example.newsapptest.ui.MainNewsActivity
 import com.example.newsapptest.ui.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ArticleFragment : Fragment() {
@@ -36,6 +37,11 @@ class ArticleFragment : Fragment() {
         mBinding.webView.apply {
             webViewClient = WebViewClient()
             loadUrl(articleInstance.url)
+        }
+
+        mBinding.floatingButton.setOnClickListener {
+            viewModel.saveArticleInDb(article = articleInstance)
+            Snackbar.make(view, "Статья успешно добавлена в сохраненные", Snackbar.LENGTH_LONG).show()
         }
     }
 
