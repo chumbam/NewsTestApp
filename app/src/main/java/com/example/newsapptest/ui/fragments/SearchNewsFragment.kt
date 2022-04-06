@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapptest.R
 import com.example.newsapptest.adapters.ArticlesAdapter
@@ -22,7 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
+class SearchNewsFragment : Fragment() {
 
     val TAG = "SearchNewsFragment"
 
@@ -43,6 +44,17 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainNewsActivity).viewModel
         setupRV()
+
+        //Кастомная функция для обработки щелчка по статье и передачи этой статью в соответствующий экран
+        articlesAdapter.setOnItemClickListener {article ->
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
 
         //Делаем задержку при поиске по всем новостям, чтобы не нагружать сетевые запросы и приложение
         var job: Job? = null

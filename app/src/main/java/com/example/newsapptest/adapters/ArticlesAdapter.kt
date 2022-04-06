@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.example.newsapptest.R
 import com.example.newsapptest.models.Article
 
-class ArticlesAdapter: RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
+class ArticlesAdapter : RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -26,14 +26,16 @@ class ArticlesAdapter: RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>()
     }
 
     //Сранивает два списка и вычисляет различия (асинхронно)
-      val differ = AsyncListDiffer(this, differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.item_article_cell,
-            parent,
-            false
-        ))
+        return ArticleViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_article_cell,
+                parent,
+                false
+            )
+        )
     }
 
     // Так как мы не передаем никуда наш список, а используем для этого differ itemCount мы берем из него
@@ -50,18 +52,17 @@ class ArticlesAdapter: RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>()
             this.findViewById<TextView>(R.id.tvTitle).text = article.title
             this.findViewById<TextView>(R.id.tvDescription).text = article.description
             this.findViewById<TextView>(R.id.tvPublishedAt).text = article.publishedAt
-            onItemClickListener?.let {
-                it(article)
+
+            setOnClickListener {
+                onItemClickListener?.let { it(article) }
             }
-
-
         }
     }
 
     // Применятеся для открытия в webView наших статей
-    private var onItemClickListener:((Article) -> Unit)? = null
+    private var onItemClickListener: ((Article) -> Unit)? = null
 
-    fun setOnClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
 

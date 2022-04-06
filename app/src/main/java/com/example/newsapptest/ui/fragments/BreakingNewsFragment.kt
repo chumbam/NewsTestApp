@@ -5,18 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapptest.R
 import com.example.newsapptest.adapters.ArticlesAdapter
 import com.example.newsapptest.databinding.FragmentBreakingNewsBinding
-import com.example.newsapptest.models.ResponseNews
 import com.example.newsapptest.ui.MainNewsActivity
 import com.example.newsapptest.ui.NewsViewModel
 import com.example.newsapptest.utils.Resource
 
 
-class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment : Fragment() {
 
     val TAG = "BreakingNewsFragment"
 
@@ -36,6 +37,16 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel  = (activity as MainNewsActivity).viewModel
         setupRV()
+
+        //Кастомная функция для обработки щелчка по статье и передачи этой статью в соответствующий экран
+        articlesAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment,
+                bundle)
+        }
 
         viewModel.brNews.observe(viewLifecycleOwner) { responseNews ->
 
