@@ -12,4 +12,7 @@ class NewsRepository @Inject constructor(
     suspend fun getBreakingNews(countryCode: String = "ru", pageNumber: Int) =
         remoteData.getBreakingNews(countryCode = countryCode, pageNumber = pageNumber)
 
+    suspend fun searchForAllNews(searchQuery: String) =
+        remoteData.searchForAllNews(searchQuery = searchQuery)
+
 }
