@@ -19,4 +19,8 @@ class RoomModule {
     fun getArticleDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context,ArticleDatabase::class.java, "article_db.db").build()
 
+    @Provides
+    @Singleton
+    fun getNewsArticleDao(db: ArticleDatabase) = db.getNewsArticleDao()
+
 }
